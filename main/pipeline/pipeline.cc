@@ -869,6 +869,14 @@ ast::ParsedFilesOrCancelled resolve(unique_ptr<core::GlobalState> &gs, vector<as
                 }
                 what = move(maybeResult.result());
             }
+
+#ifndef SORBET_REALMAIN_MIN
+            if (opts.stripePackages) {
+                Timer timeit(gs->tracer(), "visibility_checker");
+                what = packager::VisibilityChecker::run(*gs, workers, std::move(what));
+            }
+#endif
+
             if (opts.stressIncrementalResolver) {
                 auto symbolsBefore = gs->symbolsUsedTotal();
                 for (auto &f : what) {

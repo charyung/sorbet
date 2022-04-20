@@ -76,6 +76,12 @@ constexpr ErrorClass AmbiguousDefinitionError{5068, StrictLevel::False};
 constexpr ErrorClass MultipleStatementsInSig{5069, StrictLevel::False};
 constexpr ErrorClass NilableUntyped{5070, StrictLevel::False};
 constexpr ErrorClass BindNonBlockParameter{5071, StrictLevel::False};
+
+constexpr ErrorClass UsedPackagePrivateName{5072, StrictLevel::False};
+constexpr ErrorClass MissingImport{5073, StrictLevel::False};
+constexpr ErrorClass PackagedSymbolInUnpackagedContext{5074, StrictLevel::False};
+constexpr ErrorClass UsedTestOnlyName{5075, StrictLevel::False};
+constexpr ErrorClass InvalidExport{5076, StrictLevel::False};
 } // namespace sorbet::core::errors::Resolver
 
 #endif

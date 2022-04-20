@@ -559,6 +559,11 @@ TEST_CASE("PerPhaseTest") { // NOLINT
         core::UnfreezeNameTable nameTableAccess(*gs);     // Resolver::defineAttr
         core::UnfreezeSymbolTable symbolTableAccess(*gs); // enters stubs
         trees = move(resolver::Resolver::run(*gs, move(trees), *workers).result());
+
+        if (enablePackager) {
+            trees = packager::VisibilityChecker::run(*gs, *workers, move(trees));
+        }
+
         handler.drainErrors(*gs);
     }
 
@@ -846,6 +851,11 @@ TEST_CASE("PerPhaseTest") { // NOLINT
 
     // resolver
     trees = move(resolver::Resolver::runIncremental(*gs, move(trees)).result());
+
+    if (enablePackager) {
+        // TODO: need an incremental visibility checker
+        trees = packager::VisibilityChecker::runIncremental(*gs, *workers, move(trees));
+    }
 
     for (auto &resolvedTree : trees) {
         handler.addObserved(*gs, "resolve-tree", [&]() { return resolvedTree.tree.toString(*gs); });
