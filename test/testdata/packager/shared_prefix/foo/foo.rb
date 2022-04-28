@@ -3,5 +3,5 @@
 
 class Project::Foo::Foo
   puts Project::Bar::This
-     # ^^^^^^^^^^^^ error: No import provides `Project::Bar`
+     # ^^^^^^^^^^^^^^^^^^ error: Used constant `Project::Bar::This` from non-imported package `Project::Bar::This`
 end
